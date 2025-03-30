@@ -1,3 +1,4 @@
+// index.js
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -24,7 +25,7 @@ const resourceRoutes = require("./routes/resourceRoutes.js");
 const resumeRoutes = require("./routes/resumeRoutes.js");
 
 app.use("/users", userRoutes);
-app.use("/roadmaps", roadmapRoutes);
+app.use("/api/roadmaps", roadmapRoutes); // Corrected route mounting
 app.use("/resources", resourceRoutes);
 app.use("/resumes", resumeRoutes);
 
