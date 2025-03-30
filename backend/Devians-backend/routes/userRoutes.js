@@ -1,25 +1,20 @@
-// routes/userRoutes.js
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User"); // Import the User model
-const bcrypt = require("bcrypt"); // For password hashing
-const jwt = require("jsonwebtoken"); // For authentication
+const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-// POST /users/register (Create a new user)
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user
     const newUser = new User({
       username,
       email,
@@ -34,27 +29,23 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// POST /users/login (Authenticate a user)
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find the user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Compare passwords
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate a JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
-    }); // Store JWT_SECRET in .env
+    });
 
     res.json({ token });
   } catch (error) {
@@ -62,10 +53,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// GET /users/:userId (Retrieve user profile information)
 router.get("/:userId", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).select("-password"); // Exclude password
+    const user = await User.findById(req.params.userId).select("-password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -75,10 +65,9 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-// PUT /users/:userId (Update user profile information)
 router.put("/:userId", async (req, res) => {
   try {
-    const { username, email, profile } = req.body; // Add profile to the body request.
+    const { username, email, profile } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,

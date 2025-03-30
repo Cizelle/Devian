@@ -56,7 +56,7 @@ const generateRoadmap = async (data) => {
 };
 
 router.post("/", async (req, res) => {
-  const { goals, skills, title } = req.body; // Added 'title' to destructuring
+  const { goals, skills, title } = req.body;
 
   if (!goals || !skills) {
     return res.status(400).json({ message: "Goals and skills are required." });
@@ -98,11 +98,10 @@ router.post("/", async (req, res) => {
     const aiResponse = roadmapAi.bio;
     console.log("AI response content:", aiResponse);
 
-    // Temporary userId fix for testing:
-    const userId = "67e6e9a846db7a0f471f9c35"; // Replace with a valid ObjectId string (for testing)
+    const userId = "67e6e9a846db7a0f471f9c35";
 
     const roadmap = new Roadmap({
-      title: title || "Default Roadmap Title", // Use title from req.body or a default
+      title: title || "Default Roadmap Title",
       userId: userId,
       userInput: { goals, skills },
       description: aiResponse,

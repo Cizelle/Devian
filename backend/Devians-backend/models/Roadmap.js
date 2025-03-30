@@ -1,4 +1,3 @@
-// models/Roadmap.js
 const mongoose = require("mongoose");
 
 const RoadmapSchema = mongoose.Schema({
@@ -15,14 +14,12 @@ const RoadmapSchema = mongoose.Schema({
     type: String,
   },
   userInput: {
-    // Store the user's input to the AI
     goals: [String],
     skills: [String],
     other: String,
   },
   aiRoadmapId: {
-    // Store the AI-generated roadmap identifier
-    type: String, // Or whatever identifier your AI service provides
+    type: String,
   },
   resources: [
     {

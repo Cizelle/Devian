@@ -1,4 +1,3 @@
-// models/Resume.js
 const mongoose = require("mongoose");
 
 const ResumeSchema = new mongoose.Schema({
@@ -8,7 +7,6 @@ const ResumeSchema = new mongoose.Schema({
     required: true,
   },
   content: {
-    // Store the resume content as text or a file reference
     type: String,
     required: true,
   },

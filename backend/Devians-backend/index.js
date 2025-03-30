@@ -25,7 +25,7 @@ const resourceRoutes = require("./routes/resourceRoutes.js");
 const resumeRoutes = require("./routes/resumeRoutes.js");
 
 app.use("/users", userRoutes);
-app.use("/api/roadmaps", roadmapRoutes); // Corrected route mounting
+app.use("/api/roadmaps", roadmapRoutes);
 app.use("/resources", resourceRoutes);
 app.use("/resumes", resumeRoutes);
 

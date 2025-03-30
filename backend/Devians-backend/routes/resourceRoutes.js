@@ -1,20 +1,18 @@
-// routes/resourceRoutes.js
 const express = require("express");
 const router = express.Router();
 const Resource = require("../models/Resource");
 
-// GET /resources (Retrieve all resources with optional filtering/search)
 router.get("/", async (req, res) => {
   try {
     const { category, search, verified } = req.query;
     let query = {};
 
     if (category) query.category = category;
-    if (verified) query.verified = verified === "true"; // Convert to boolean
+    if (verified) query.verified = verified === "true";
 
     if (search) {
       query.$or = [
-        { title: { $regex: search, $options: "i" } }, // Case-insensitive search
+        { title: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } },
       ];
     }
@@ -26,7 +24,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST /resources (Add a new resource)
 router.post("/", async (req, res) => {
   try {
     const { title, url, description, category, verified } = req.body;
@@ -44,14 +41,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT /resources/:resourceId (Update a resource)
 router.put("/:resourceId", async (req, res) => {
   try {
     const { title, url, description, category, verified } = req.body;
     const resource = await Resource.findByIdAndUpdate(
       req.params.resourceId,
       { title, url, description, category, verified },
-      { new: true } // Return the updated resource
+      { new: true }
     );
     if (!resource) {
       return res.status(404).json({ message: "Resource not found" });
@@ -62,7 +58,6 @@ router.put("/:resourceId", async (req, res) => {
   }
 });
 
-// DELETE /resources/:resourceId (Delete a resource)
 router.delete("/:resourceId", async (req, res) => {
   try {
     const resource = await Resource.findByIdAndDelete(req.params.resourceId);

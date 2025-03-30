@@ -8,8 +8,6 @@ const port = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// REMOVED: app.post("/roadmaps", ...);
-
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
