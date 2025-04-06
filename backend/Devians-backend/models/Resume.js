@@ -6,9 +6,17 @@ const ResumeSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  filename: {
+    type: String,
+  },
+  filePath: {
+    type: String,
+  },
+  mimeType: {
+    type: String,
+  },
   content: {
     type: String,
-    required: true,
   },
   creationDate: {
     type: Date,
